@@ -8,12 +8,15 @@
 body {
 	background-color: rgb(237, 237, 237);
 }
+
 h1 {
 	font-size: 16px;
 }
+
 h2 {
 	font-size: 12px;
 }
+
 .bold {
 	font-weight: bold;
 }
@@ -34,33 +37,39 @@ h2 {
 	flex-grow: 1 1 0px;
 	background-color: white;
 	padding: 6px;
+	margin: 8px auto;
 	border-radius: 3px;
 	-webkit-box-shadow: 3px 4px 8px 0px rgba(232,232,232,1);
 	-moz-box-shadow: 3px 4px 8px 0px rgba(232,232,232,1);
 	box-shadow: 3px 4px 8px 0px rgba(232,232,232,1);
 }
+
 .testimonial > .header {
 	display: flex;
 }
+
 .testimonial > .header > .avatar-container {
 	justify-content: center;
 	text-align: center;
 	flex-basis: 25%;
 }
+
 .testimonial > .header  img.avatar {
 	width: 80px;
 	height: auto;
 	border-radius: 50%;
 }
-.testimonial > .header > .text {
+
+.testimonial > .header > .title-container {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
 	flex-basis: 75%;
 }
-.testimonial > .header > .text .title,
-.testimonial > .header > .text .subtitle {
+
+.testimonial > .header > .title-container .title,
+.testimonial > .header > .title-container .subtitle {
 	width: 100%;
 }
 
