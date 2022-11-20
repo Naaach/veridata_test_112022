@@ -165,7 +165,7 @@ window.addEventListener('load', windowLoadEvent => {
 
 	if (store.modal.$btnAdd) { 		// Guardar el nuevo testimonio
 		store.modal.$btnAdd.addEventListener('click', event => {
-			const validForm = checkForm(store.form)
+			const validForm = checkForm()
 			if (validForm) {
 				// Generamos el objeto de testimonio
 				store.testimonials.push({

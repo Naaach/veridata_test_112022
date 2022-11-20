@@ -74,7 +74,7 @@ a {
 .testimonial>.header>.avatar-container {
 	justify-content: center;
 	text-align: center;
-	flex-basis: 25%;
+	flex-basis: 33%;
 }
 
 .testimonial>.header img.avatar {
@@ -88,7 +88,7 @@ a {
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-	flex-basis: 75%;
+	flex-basis: 66%;
 }
 
 .testimonial>.header>.title-container .title,
