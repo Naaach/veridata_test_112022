@@ -36,10 +36,10 @@ window.addEventListener('load', windowLoadEvent => {
 		},
 		form: {
 			rules: {
-				name: 						[ v => !!v, v => v+"" != "" ],
-				location: 				[ v => !!v, v => v+"" != "" ],
-				message: 	[ v => !!v, v => v+"" != "" ],
-				rating: 					[ v => !!v, v => v+"" != "" , v => parseFloat(v) >= 0 && parseFloat(v) <= 5]
+				name: [v => !!v, v => v + "" != ""],
+				location: [v => !!v, v => v + "" != ""],
+				message: [v => !!v, v => v + "" != ""],
+				rating: [v => !!v, v => v + "" != "", v => parseFloat(v) >= 0 && parseFloat(v) <= 5]
 			},
 			fields: ['name', 'location', 'rating', 'message'].reduce((fields, key) => {
 				const selector = `#new-testimonial .input-wrapper.${key}`
@@ -52,8 +52,6 @@ window.addEventListener('load', windowLoadEvent => {
 			}, {})
 		}
 	}
-
-	window.store = store
 
 	// Obtener los testimonios de la api
 	function getTestimonials() {
@@ -82,6 +80,7 @@ window.addEventListener('load', windowLoadEvent => {
 		store.elements.$mainContainer.innerHTML = ""
 		store.testimonials.forEach(t => addTestimonialToBody(t))
 	}
+
 	function addTestimonialToBody(testimonial) {
 		const clone = store.elements.$testimonialsTemplate.content.cloneNode(true);
 		const $testimonial = clone.querySelector('div.testimonial')
@@ -89,7 +88,7 @@ window.addEventListener('load', windowLoadEvent => {
 		// Añadimos el avatar
 		const $avatar = $testimonial.querySelector('img.avatar')
 		if ($avatar) {
-			if (testimonial.avatar) $avatar.setAttribute('src', testimonial.avatar )
+			if (testimonial.avatar) $avatar.setAttribute('src', testimonial.avatar)
 			$avatar.setAttribute('alt', testimonial.name || '')
 		}
 
@@ -141,14 +140,14 @@ window.addEventListener('load', windowLoadEvent => {
 
 		return validForm
 	}
-	 function clearForm() {
+	function clearForm() {
 		Object.keys(store.form.fields).forEach(k => {
 			// Recogemos los valores
 			store.form.fields[k].value = null
 			store.form.fields[k].$el.value = ""
 			store.form.fields[k].$hint.classList.add('hide')
 		})
-	 }
+	}
 
 	// listeners
 	if (store.modal.$openModalBtn) {		// Abrir el modal
@@ -157,29 +156,28 @@ window.addEventListener('load', windowLoadEvent => {
 		}, false)
 	}
 
-	if (store.modal.$btnCancel) { // Cerrar el modal
+	if (store.modal.$btnCancel) { 	// Cerrar el modal
 		store.modal.$btnCancel.addEventListener('click', event => {
 			modalChangeState(false)
 			clearForm()
 		}, false)
 	}
 
-	if (store.modal.$btnAdd) {
+	if (store.modal.$btnAdd) { 		// Guardar el nuevo testimonio
 		store.modal.$btnAdd.addEventListener('click', event => {
 			const validForm = checkForm(store.form)
 			if (validForm) {
-					// Generamos el objeto de testimonio
-					store.testimonials.push({
-						name: store.form.fields.name.value,
-						location: store.form.fields.location.value,
-						rating: store.form.fields.rating.value,
-						message: store.form.fields.message.value,
-					})
+				// Generamos el objeto de testimonio
+				store.testimonials.push({
+					name: store.form.fields.name.value,
+					location: store.form.fields.location.value,
+					rating: store.form.fields.rating.value,
+					message: store.form.fields.message.value,
+				})
 
-					showTestimonials()
-					modalChangeState(false)
-					clearForm()
-
+				showTestimonials()
+				modalChangeState(false)
+				clearForm()
 			}
 		}, false)
 	}

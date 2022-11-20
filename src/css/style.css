@@ -24,9 +24,11 @@ a {
 .bold {
 	font-weight: bold !important;
 }
+
 .hide {
 	display: none !important;
 }
+
 .red {
 	color: rgb(232, 69, 69) !important;
 }
@@ -46,31 +48,42 @@ a {
 	flex-basis: 32%;
 	flex-grow: 1 1 0px;
 	background-color: white;
-	padding: 6px;
+	padding: 12px;
 	margin: 8px auto;
 	border-radius: 3px;
-	-webkit-box-shadow: 3px 4px 8px 0px rgba(232,232,232,1);
-	-moz-box-shadow: 3px 4px 8px 0px rgba(232,232,232,1);
-	box-shadow: 3px 4px 8px 0px rgba(232,232,232,1);
+	-webkit-box-shadow: 3px 4px 8px 0px rgba(232, 232, 232, 1);
+	-moz-box-shadow: 3px 4px 8px 0px rgba(232, 232, 232, 1);
+	box-shadow: 3px 4px 8px 0px rgba(232, 232, 232, 1);
 }
 
-.testimonial > .header {
+.testimonial>.header {
 	display: flex;
 }
 
-.testimonial > .header > .avatar-container {
+.testimonial>.header::after {
+	content: "\fd77";
+	font: normal normal normal 1em/1 "Phosphor";
+	font-size: 2.5em;
+	position: relative;
+	display: inline;
+	right: 0px;
+	margin: 4px;
+}
+
+
+.testimonial>.header>.avatar-container {
 	justify-content: center;
 	text-align: center;
 	flex-basis: 25%;
 }
 
-.testimonial > .header  img.avatar {
+.testimonial>.header img.avatar {
 	width: 80px;
 	height: auto;
 	border-radius: 50%;
 }
 
-.testimonial > .header > .title-container {
+.testimonial>.header>.title-container {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -78,14 +91,13 @@ a {
 	flex-basis: 75%;
 }
 
-.testimonial > .header > .title-container .title,
-.testimonial > .header > .title-container .subtitle {
+.testimonial>.header>.title-container .title,
+.testimonial>.header>.title-container .subtitle {
 	width: 100%;
 }
 
-.testimonial > .text {
-	margin-top: 6px;
-	margin-bottom: 6px;
+.testimonial>.text {
+	margin: 10px auto;
 }
 
 /* Boton de añadir testimonio */
@@ -96,15 +108,17 @@ a {
 	bottom: 1.5em;
 	float: right;
 	margin-right: 1em;
-	padding: 16px 22px;
+	padding: 16px 17px;
 	color: white;
 	border-radius: 50%;
 	background-color: rgb(154, 70, 154);
 	font-size: 17px;
 	transition: all .2s ease-in-out;
+	line-height: 14px;
 }
+
 .add-button:hover {
-	padding: 20px 28px;
+	padding: 20px 22px;
 	font-size: 20px;
 }
 
@@ -116,10 +130,11 @@ a {
 	top: 0;
 	width: 100vw;
 	height: 100vh;
-	max-width:100%;
+	max-width: 100%;
 	background-color: #00000082;
 	backdrop-filter: blur(4px);
 }
+
 .modal.modal-form {
 	width: 40vw;
 	padding: 22px;
@@ -135,9 +150,11 @@ a {
 .input-wrapper {
 	margin: 12px;
 }
+
 .input-wrapper:first-child {
 	margin-top: 0px;
 }
+
 .input-wrapper:last-child {
 	margin-top: 0px;
 }
@@ -154,29 +171,29 @@ input[type="time"],
 input[type="url"],
 textarea,
 select {
-  background: rgba(255,255,255,0.1);
-  border: none;
-  font-size: 16px;
-  height: auto;
-  margin: 0;
-  outline: 0;
-  padding: 6px;
-  width: 100%;
-  background-color: transparent;
-  color: #333;
-  border: 1px solid #333;
+	background: rgba(255, 255, 255, 0.1);
+	border: none;
+	font-size: 16px;
+	height: auto;
+	margin: 0;
+	outline: 0;
+	padding: 6px;
+	width: 100%;
+	background-color: transparent;
+	color: #333;
+	border: 1px solid #333;
 	border-radius: 3px;
-  margin-bottom: 8px;
+	margin-bottom: 8px;
 }
 
 label {
-  display: block;
-  margin-bottom: 8px;
+	display: block;
+	margin-bottom: 8px;
 }
 
 label.light {
-  font-weight: 300;
-  display: inline;
+	font-weight: 300;
+	display: inline;
 }
 
 .modal .modal-footer {
