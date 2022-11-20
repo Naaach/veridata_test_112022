@@ -95,10 +95,11 @@ a {
 	position: sticky;
 	bottom: 1.5em;
 	float: right;
+	margin-right: 1em;
 	padding: 16px 22px;
 	color: white;
 	border-radius: 50%;
-	background-color: purple;
+	background-color: rgb(154, 70, 154);
 	font-size: 17px;
 	transition: all .2s ease-in-out;
 }
@@ -176,4 +177,35 @@ label {
 label.light {
   font-weight: 300;
   display: inline;
+}
+
+.modal .modal-footer {
+	display: flex;
+	flex-direction: row;
+	justify-content: end;
+}
+
+.button {
+	padding: 4px 14px;
+	margin: 0px 6px;
+	border-radius: 3px;
+	border: 1px solid rgb(154, 70, 154);
+	background-color: rgb(154, 70, 154);
+	color: white;
+	transition: all .2s;
+}
+
+.button:hover {
+	background-color: rgb(178, 22, 178);
+	color: white;
+}
+
+.button.cancel:hover {
+	background-color: rgb(232, 69, 69);
+	color: white;
+}
+
+.button.outline {
+	background-color: transparent;
+	color: rgb(154, 70, 154);
 }

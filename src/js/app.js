@@ -7,6 +7,12 @@ function prevChecks() {
 		validBrowser = false
 	}
 
+	// Comprobamos si se puede usar la API de fetch
+	if (!('fetch' in window)) {
+		alert("Se requiere un navegador que soporte fetch API")
+		validBrowser = false
+	}
+
 	return validBrowser
 }
 
@@ -18,13 +24,32 @@ window.addEventListener('load', windowLoadEvent => {
 		testimonials: [],
 		elements: {
 			html: document.querySelector('html'),
-			mainContainer: document.querySelector('section.main-container'),
-			testimonialsTemplate: document.querySelector('template#testimonial'),
+			$mainContainer: document.querySelector('section.main-container'),
+			$testimonialsTemplate: document.querySelector('template#testimonial'),
 		},
 		modal: {
 			open: false,
 			$backdrop: document.querySelector('.backdrop'),
-			$openModalBtn: document.querySelector('.add-button')
+			$openModalBtn: document.querySelector('.add-button'),
+			$btnCancel: document.querySelector('.backdrop .modal-footer .button.cancel'),
+			$btnAdd: document.querySelector('.backdrop .modal-footer .button.add'),
+		},
+		form: {
+			rules: {
+				name: 						[ v => !!v, v => v+"" != "" ],
+				location: 				[ v => !!v, v => v+"" != "" ],
+				message: 	[ v => !!v, v => v+"" != "" ],
+				rating: 					[ v => !!v, v => v+"" != "" , v => parseFloat(v) >= 0 && parseFloat(v) <= 5]
+			},
+			fields: ['name', 'location', 'rating', 'message'].reduce((fields, key) => {
+				const selector = `#new-testimonial .input-wrapper.${key}`
+				fields[key] = {
+					$el: document.querySelector(`${selector} [name="user_${key}"]`),
+					$hint: document.querySelector(`${selector} .hint`),
+					value: null,
+				}
+				return fields
+			}, {})
 		}
 	}
 
@@ -48,20 +73,23 @@ window.addEventListener('load', windowLoadEvent => {
 	}
 
 	getTestimonials().then(() => {
-		console.log(store.testimonials)
-		store.testimonials = store.testimonials.sort((a, b) => b.rating - a.rating)
-		store.testimonials.forEach(t => addTestimonialToBody(t))
+		showTestimonials()
 	})
 
 	// Pintamos los testimonios
+	function showTestimonials() {
+		store.testimonials = store.testimonials.sort((a, b) => b.rating - a.rating)
+		store.elements.$mainContainer.innerHTML = ""
+		store.testimonials.forEach(t => addTestimonialToBody(t))
+	}
 	function addTestimonialToBody(testimonial) {
-		const clone = store.elements.testimonialsTemplate.content.cloneNode(true);
+		const clone = store.elements.$testimonialsTemplate.content.cloneNode(true);
 		const $testimonial = clone.querySelector('div.testimonial')
 
 		// Añadimos el avatar
 		const $avatar = $testimonial.querySelector('img.avatar')
 		if ($avatar) {
-			$avatar.setAttribute('src', testimonial.avatar || '')
+			if (testimonial.avatar) $avatar.setAttribute('src', testimonial.avatar )
 			$avatar.setAttribute('alt', testimonial.name || '')
 		}
 
@@ -79,12 +107,11 @@ window.addEventListener('load', windowLoadEvent => {
 		const $rating = $testimonial.querySelector('.rating .bold')
 		if ($rating) $rating.innerText = testimonial.rating || ''
 
-		store.elements.mainContainer.appendChild($testimonial)
+		store.elements.$mainContainer.appendChild($testimonial)
 	}
 
 	// Modal
 	function modalChangeState(state) {
-		console.log(state)
 		store.modal.open = state
 		if (store.modal.open) {
 			store.modal.$backdrop.classList.remove('hide')
@@ -93,10 +120,67 @@ window.addEventListener('load', windowLoadEvent => {
 		}
 	}
 
+	// Formulario
+	function checkForm() {
+		let validForm = true
+
+		Object.keys(store.form.fields).forEach(k => {
+			// Recogemos los valores
+			store.form.fields[k].value = store.form.fields[k].$el.value
+
+			// paramos los valores por el validador
+			const valid = store.form.rules[k].every(r => r(store.form.fields[k].value))
+			store.form.fields[k].valid = valid
+			if (!store.form.fields[k].valid) {
+				validForm = false
+				store.form.fields[k].$hint.classList.remove('hide')
+			} else {
+				store.form.fields[k].$hint.classList.add('hide')
+			}
+		})
+
+		return validForm
+	}
+	 function clearForm() {
+		Object.keys(store.form.fields).forEach(k => {
+			// Recogemos los valores
+			store.form.fields[k].value = null
+			store.form.fields[k].$el.value = ""
+			store.form.fields[k].$hint.classList.add('hide')
+		})
+	 }
+
 	// listeners
-	if (store.modal.$openModalBtn) {
+	if (store.modal.$openModalBtn) {		// Abrir el modal
 		store.modal.$openModalBtn.addEventListener('click', event => {
 			modalChangeState(true)
+		}, false)
+	}
+
+	if (store.modal.$btnCancel) { // Cerrar el modal
+		store.modal.$btnCancel.addEventListener('click', event => {
+			modalChangeState(false)
+			clearForm()
+		}, false)
+	}
+
+	if (store.modal.$btnAdd) {
+		store.modal.$btnAdd.addEventListener('click', event => {
+			const validForm = checkForm(store.form)
+			if (validForm) {
+					// Generamos el objeto de testimonio
+					store.testimonials.push({
+						name: store.form.fields.name.value,
+						location: store.form.fields.location.value,
+						rating: store.form.fields.rating.value,
+						message: store.form.fields.message.value,
+					})
+
+					showTestimonials()
+					modalChangeState(false)
+					clearForm()
+
+			}
 		}, false)
 	}
 })
