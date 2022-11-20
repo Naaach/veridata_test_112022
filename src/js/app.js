@@ -17,8 +17,14 @@ window.addEventListener('load', windowLoadEvent => {
 		testimonialsUrl: "https://testimonialapi.toolcarton.com/api",
 		testimonials: [],
 		elements: {
+			html: document.querySelector('html'),
 			mainContainer: document.querySelector('section.main-container'),
-			testimonialsTemplate: document.querySelector('template#testimonial')
+			testimonialsTemplate: document.querySelector('template#testimonial'),
+		},
+		modal: {
+			open: false,
+			$backdrop: document.querySelector('.backdrop'),
+			$openModalBtn: document.querySelector('.add-button')
 		}
 	}
 
@@ -37,12 +43,13 @@ window.addEventListener('load', windowLoadEvent => {
 				.catch(err => {
 					console.log(err)
 					alert('Error obteniendo los testimonios')
-				}) 
+				})
 		})
 	}
 
 	getTestimonials().then(() => {
 		console.log(store.testimonials)
+		store.testimonials = store.testimonials.sort((a, b) => b.rating - a.rating)
 		store.testimonials.forEach(t => addTestimonialToBody(t))
 	})
 
@@ -73,5 +80,23 @@ window.addEventListener('load', windowLoadEvent => {
 		if ($rating) $rating.innerText = testimonial.rating || ''
 
 		store.elements.mainContainer.appendChild($testimonial)
+	}
+
+	// Modal
+	function modalChangeState(state) {
+		console.log(state)
+		store.modal.open = state
+		if (store.modal.open) {
+			store.modal.$backdrop.classList.remove('hide')
+		} else {
+			store.modal.$backdrop.classList.add('hide')
+		}
+	}
+
+	// listeners
+	if (store.modal.$openModalBtn) {
+		store.modal.$openModalBtn.addEventListener('click', event => {
+			modalChangeState(true)
+		}, false)
 	}
 })

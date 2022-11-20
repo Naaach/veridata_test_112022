@@ -17,8 +17,18 @@ h2 {
 	font-size: 12px;
 }
 
+a {
+	text-decoration: none;
+}
+
 .bold {
-	font-weight: bold;
+	font-weight: bold !important;
+}
+.hide {
+	display: none !important;
+}
+.red {
+	color: rgb(232, 69, 69) !important;
 }
 
 .main-container {
@@ -76,4 +86,94 @@ h2 {
 .testimonial > .text {
 	margin-top: 6px;
 	margin-bottom: 6px;
+}
+
+/* Boton de añadir testimonio */
+.add-button {
+	z-index: 2;
+	display: inline;
+	position: sticky;
+	bottom: 1.5em;
+	float: right;
+	padding: 16px 22px;
+	color: white;
+	border-radius: 50%;
+	background-color: purple;
+	font-size: 17px;
+	transition: all .2s ease-in-out;
+}
+.add-button:hover {
+	padding: 20px 28px;
+	font-size: 20px;
+}
+
+/* Modal y formulario */
+.backdrop {
+	z-index: 3;
+	display: block;
+	position: fixed;
+	top: 0;
+	width: 100vw;
+	height: 100vh;
+	max-width:100%;
+	background-color: #00000082;
+	backdrop-filter: blur(4px);
+}
+.modal.modal-form {
+	width: 40vw;
+	padding: 22px;
+	position: relative;
+	display: inline-block;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: rgb(237, 237, 237);
+	border-radius: 3px;
+}
+
+.input-wrapper {
+	margin: 12px;
+}
+.input-wrapper:first-child {
+	margin-top: 0px;
+}
+.input-wrapper:last-child {
+	margin-top: 0px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="date"],
+input[type="datetime"],
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="time"],
+input[type="url"],
+textarea,
+select {
+  background: rgba(255,255,255,0.1);
+  border: none;
+  font-size: 16px;
+  height: auto;
+  margin: 0;
+  outline: 0;
+  padding: 6px;
+  width: 100%;
+  background-color: transparent;
+  color: #333;
+  border: 1px solid #333;
+	border-radius: 3px;
+  margin-bottom: 8px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+label.light {
+  font-weight: 300;
+  display: inline;
 }
