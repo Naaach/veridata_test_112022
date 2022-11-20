@@ -66,6 +66,7 @@ window.addEventListener('load', windowLoadEvent => {
 				.catch(err => {
 					console.log(err)
 					alert('Error obteniendo los testimonios')
+					reject(err)
 				})
 		})
 	}
@@ -127,7 +128,7 @@ window.addEventListener('load', windowLoadEvent => {
 			// Recogemos los valores
 			store.form.fields[k].value = store.form.fields[k].$el.value
 
-			// paramos los valores por el validador
+			// Pasamos los valores por sus validadores
 			const valid = store.form.rules[k].every(r => r(store.form.fields[k].value))
 			store.form.fields[k].valid = valid
 			if (!store.form.fields[k].valid) {
@@ -171,7 +172,7 @@ window.addEventListener('load', windowLoadEvent => {
 				store.testimonials.push({
 					name: store.form.fields.name.value,
 					location: store.form.fields.location.value,
-					rating: store.form.fields.rating.value,
+					rating: parseFloat(store.form.fields.rating.value),
 					message: store.form.fields.message.value,
 				})
 
